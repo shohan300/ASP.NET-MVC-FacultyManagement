@@ -1,0 +1,39 @@
+﻿@model FacultyManagement.Models.ViewModels.FacultyViewModel
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete Faculty</h2>
+<dl>
+    <dt>@Html.DisplayNameFor(model => model.FacultyId)</dt>
+    <dd>@Html.DisplayFor(model => model.FacultyId)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.FacultyName)</dt>
+    <dd>@Html.DisplayFor(model => model.FacultyName)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+    <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.JoinDate)</dt>
+    <dd>@Html.DisplayFor(model => model.JoinDate)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.CourseName)</dt>
+    <dd>@Html.DisplayFor(model => model.CourseName)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.FacultyId)</dt>
+    <dd>@Html.DisplayFor(model => model.FacultyId)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.ImageUrl)</dt>
+    <dd><img src="@Url.Content(Model.ImageUrl)" alt="@Model.ImageName" width="60" height="60" /></dd>
+    <br /><br />
+    @using (Html.BeginForm("Delete", "Facultys", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken();
+        @Html.HiddenFor(model => model.FacultyId)
+        <div class="form-actions">
+            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Do you want to Delete?')" />
+        </div>
+    }
+    @Html.ActionLink("Back to Faculty List", "Index")
+</dl>

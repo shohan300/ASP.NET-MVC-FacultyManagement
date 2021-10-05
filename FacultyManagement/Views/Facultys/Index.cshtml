@@ -1,0 +1,92 @@
+﻿@model PagedList.IPagedList<FacultyManagement.Models.ViewModels.FacultyViewModel>
+    @using PagedList.Mvc;
+@*@model IEnumerable<FacultyManagement.Models.ViewModels.FacultyViewModel>*@
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Faculty Informations</h2>
+@*Search*@
+<div class="container-fluid">
+    <div class="row">
+        <button class="btn btn-outline-success">
+            @Html.ActionLink("Create New Faculty", "Create")
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("Index", "Facultys", FormMethod.Get))
+        {
+        <p>
+            ⌕ Search Here : @Html.TextBox("SearchString")
+            <input type="submit" value="Search" class="btn btn-info" />
+        </p>
+        }
+    </div>
+</div>
+<table class="table table-bordered">
+    <tr>
+        <th>Faculty ID</th>
+        <th>@Html.ActionLink("Faculty Name ⇅", "Index", new { SortOrder= ViewBag.SortNameParam })</th>
+        <th>Email</th>
+        <th>@Html.ActionLink("Join Date ⇅", "Index", new { SortOrder=ViewBag.SortNameParam})</th>
+        <th>Image Url</th>
+        <th>Image</th>
+        <th>Course ID</th>
+        <th>Course Name</th>
+        <th>Operations</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.FacultyId)</td>
+            <td>@Html.DisplayFor(modelItem => item.FacultyName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Email)</td>
+            <td>
+                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.JoinDate))
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.ImageName)</td>
+            <td>
+                <img src="@Url.Content(item.ImageUrl)" alt="@item.ImageName" width="30" height="30" />
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.CourseId)</td>
+            <td>@Html.DisplayFor(modelItem => item.CourseName)</td>
+            <td>
+                <button class="btn btn-outline-warning">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.FacultyId })
+                </button>
+                <button class="btn btn-outline-danger">
+                    @Html.ActionLink("Delete", "Delete", new { id = item.FacultyId })
+                </button>
+                <a href="#" class="btn btn-info" name="details" onclick='DetailsRecord("+@item.FacultyId+")'>Details</a>
+            </td>
+        </tr>
+    }
+</table>
+<br />
+Page @(Model.PageCount<Model.PageNumber?0:Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page=>Url.Action("Index", new { Page, SortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter}))
+<div id="partialDiv">
+    @if (ViewBag.Details == "Show")
+    {
+        @Html.Partial("_DetailsRecord", Model)
+        ViewBag.Details = "";
+    }
+</div>
+<script>
+    function DetailsRecord(facultyId) {
+        $.ajax({
+            url: "/Facultys/Details?id=" + facultyId,
+            type: "GET",
+            data: "",
+            contentType: 'application/Json;charset=utf-8',
+            success: function (data) {
+                $('#partialDiv').show();
+                $('#partialDiv').html(data);
+            },
+            error: function () {
+                alert("Error Occured")
+            }
+        });
+    }
+</script>

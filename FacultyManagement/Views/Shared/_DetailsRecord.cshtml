@@ -1,0 +1,25 @@
+﻿@model FacultyManagement.Models.ViewModels.FacultyViewModel
+<h2>Faculty Details</h2>
+<dl>
+    <dt>@Html.DisplayNameFor(model => model.FacultyId)</dt>
+    <dd>@Html.DisplayFor(model => model.FacultyId)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.FacultyName)</dt>
+    <dd>@Html.DisplayFor(model => model.FacultyName)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+    <dd>@Html.DisplayFor(model => model.Email)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.JoinDate)</dt>
+    <dd>@Html.DisplayFor(model => model.JoinDate)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.CourseName)</dt>
+    <dd>@Html.DisplayFor(model => model.CourseName)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.FacultyId)</dt>
+    <dd>@Html.DisplayFor(model => model.FacultyId)</dd>
+
+    <dt>@Html.DisplayNameFor(model => model.ImageUrl)</dt>
+    <dd><img src="@Url.Content(Model.ImageUrl)" alt="@Model.ImageName" width="60" height="60" /></dd>
+</dl>
+@Html.ActionLink("Back to Faculty List", "Index")
